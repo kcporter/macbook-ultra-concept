@@ -26,7 +26,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-XH6HFR0QJ3');
+    if (location.hostname === 'macbook-ultra-concept.vercel.app') gtag('config', 'G-XH6HFR0QJ3');
   </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='17' rx='3' fill='%23bfc3c9'/%3E%3Cpath d='M2 24h28l-2 3H4z' fill='%237a818c'/%3E%3C/svg%3E">
   <script>
@@ -1197,6 +1197,40 @@
       stopMotion();
       render();
     });
+    // Analytics: report what people do with the model as Google Analytics events.
+    // No-ops wherever the Google tag isn't present (local files, the claude.ai copy).
+    function track(name, params) {
+      try { if (typeof gtag === 'function') gtag('event', name, params || {}); } catch {}
+    }
+    const trackedOnce = new Set();
+    const trackOnce = (name, params) => { if (!trackedOnce.has(name)) { trackedOnce.add(name); track(name, params); } };
+    shotButtons.forEach(button => button.addEventListener('click', () =>
+      track('select_view', { view_name: button.textContent.trim() })));
+    document.querySelectorAll('[data-pose]').forEach(button => button.addEventListener('click', () =>
+      track('change_posture', { posture: button.dataset.pose, method: 'button' })));
+    slider.addEventListener('change', () =>
+      track('change_posture', { posture: 'custom', hinge_angle: Number(slider.value), method: 'slider' }));
+    // Orbit and zoom fire constantly, so each is reported once per visit: did this visitor play with the model?
+    let pressAt = null;
+    viewer.addEventListener('pointerdown', event => { pressAt = [event.clientX, event.clientY, event.pointerType]; });
+    viewer.addEventListener('pointerup', event => {
+      if (pressAt && Math.hypot(event.clientX - pressAt[0], event.clientY - pressAt[1]) > 12)
+        trackOnce('orbit_model', { method: pressAt[2] === 'touch' ? 'touch' : 'drag' });
+      pressAt = null;
+    });
+    viewer.addEventListener('wheel', () => trackOnce('zoom_model', { method: 'wheel' }), { passive: true });
+    viewer.addEventListener('dblclick', () => trackOnce('zoom_model', { method: 'double_click' }));
+    viewer.addEventListener('touchstart', event => { if (event.touches.length === 2) trackOnce('zoom_model', { method: 'pinch' }); }, { passive: true });
+    document.querySelectorAll('.zoom-controls button').forEach(button => button.addEventListener('click', () => trackOnce('zoom_model', { method: 'buttons' })));
+    viewer.addEventListener('keydown', event => {
+      if (event.key.startsWith('Arrow')) trackOnce('orbit_model', { method: 'keyboard' });
+      if ('+=-_'.includes(event.key)) trackOnce('zoom_model', { method: 'keyboard' });
+    });
+    themeToggle.addEventListener('click', () => track('toggle_theme', { theme: document.documentElement.dataset.theme }));
+    trackpadLightToggle.addEventListener('click', () =>
+      track('toggle_trackpad_light', { state: trackpadLightToggle.getAttribute('aria-checked') === 'true' ? 'on' : 'off' }));
+    backlightToggle.addEventListener('click', () =>
+      track('toggle_backlight', { state: backlightToggle.getAttribute('aria-checked') === 'true' ? 'on' : 'off' }));
     addEventListener('resize', render);
     render();
   </script>
