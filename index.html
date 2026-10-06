@@ -40,6 +40,8 @@
     .badge { border:1px solid var(--line); padding:9px 12px; border-radius:999px; background:rgba(255,255,255,.55); color:#5f5c59; font-size:11px; white-space:nowrap; }
 
     .viewer { min-height:560px; max-width:1320px; width:100%; margin:auto; position:relative; overflow:hidden; border:1px solid rgba(255,255,255,.82); border-radius:30px; background:radial-gradient(ellipse at 50% 53%, rgba(255,255,255,.98), rgba(238,235,232,.7) 64%, rgba(226,223,220,.35)); box-shadow:inset 0 1px rgba(255,255,255,.9), 0 22px 60px rgba(51,43,37,.09); touch-action:none; cursor:grab; }
+    /* Dragging to orbit must not select the key legends or screen text. */
+    .viewer { -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
     .viewer.dragging { cursor:grabbing; }
     .viewer.panning { cursor:move; }
     .viewer:focus-visible { outline:2px solid var(--violet); outline-offset:3px; }
@@ -1035,6 +1037,7 @@
     };
     viewer.addEventListener('pointerdown', event => {
       stopMotion(); cancelAnimationFrame(zoomFrame);
+      if (event.pointerType === 'mouse') event.preventDefault();
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       try { viewer.setPointerCapture(event.pointerId); } catch {}
       if (pointers.size === 2) { dragging = panning = false; pinch = pinchState(); viewer.classList.remove('dragging', 'panning'); return; }
