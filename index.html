@@ -4,6 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MacBook Ultra Concept</title>
+  <meta name="description" content="An unofficial interactive 3D concept for a thin convertible MacBook Ultra: OLED, a flush-fold hinge and a 360° design.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MacBook Ultra Concept">
+  <meta property="og:description" content="An unofficial interactive 3D concept for a thin convertible MacBook Ultra: OLED, a flush-fold hinge and a 360° design.">
+  <meta property="og:url" content="https://macbook-ultra-concept.vercel.app/">
+  <meta property="og:image" content="https://macbook-ultra-concept.vercel.app/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MacBook Ultra Concept: a silver convertible laptop, open, beside the title text.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MacBook Ultra Concept">
+  <meta name="twitter:description" content="An unofficial interactive 3D concept for a thin convertible MacBook Ultra.">
+  <meta name="twitter:image" content="https://macbook-ultra-concept.vercel.app/og.png">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='5' width='24' height='17' rx='3' fill='%23bfc3c9'/%3E%3Cpath d='M2 24h28l-2 3H4z' fill='%237a818c'/%3E%3C/svg%3E">
   <script>
     (() => {
@@ -241,6 +254,18 @@
     :root[data-theme="dark"] .footer { color:#8c8781; }
     /* On-screen macOS follows the theme: white menu bar text in dark mode. */
     :root[data-theme="dark"] .menubar { color:#fff; text-shadow:0 0 2px rgba(0,0,0,.35); }
+    /* Featured views: curated camera presets for the live model (pose, angle, zoom, lighting). */
+    .shots { max-width:1320px; width:100%; margin:auto; display:flex; align-items:center; gap:14px; min-width:0; }
+    .shots-label { flex:none; font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+    .shots-row { display:flex; gap:8px; overflow-x:auto; padding:2px 2px 4px; scrollbar-width:thin; min-width:0; }
+    .shots .shot { flex:none; display:flex; flex-direction:column; align-items:center; gap:4px; min-width:92px; min-height:0; padding:8px 10px 7px; border-radius:14px; font-size:11px; }
+    .shot svg { width:40px; height:27px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+    .shot svg .fill { fill:currentColor; stroke:none; }
+    .shot svg .glow { stroke:var(--violet); filter:drop-shadow(0 0 2px rgba(125,80,255,.55)); }
+    .shots .shot[aria-pressed="true"] { color:#5134bf; border-color:rgba(125,80,255,.55); background:rgba(125,80,255,.08); box-shadow:none; }
+    :root[data-theme="dark"] .shots .shot[aria-pressed="true"] { color:#cbbcff; border-color:rgba(160,132,255,.6); background:rgba(143,107,255,.14); }
+    @media (max-width:760px) { .shots { flex-direction:column; align-items:stretch; gap:8px; } }
+
     /* ---------- Rumor board (bento) ---------- */
     .rumors { max-width:1320px; width:100%; margin:clamp(28px,5vw,64px) auto 0; }
     .rumors-head { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; margin-bottom:18px; }
@@ -479,6 +504,10 @@
         </div></div>
       </div>
     </section>
+    <nav class="shots" aria-label="Featured views">
+      <span class="shots-label">Featured views</span>
+      <div class="shots-row"><button type="button" class="shot" data-shot="hero" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><path d="M6 25H33"/><path d="M33 25 38.5 5"/></svg><span>Hero</span></button><button type="button" class="shot" data-shot="behind" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><rect x="10" y="5" width="28" height="20" rx="3"/><path class="fill" d="M24 11.4c1 0 1.6.7 1.8 1.8.1.9.4 1.6 1 2.2l-.2.5c.6 1.6.3 3.3-.9 4.3-.9.7-2 .9-1.7.9-1.3 0-2.6-.3-3.4-1.1-1.1-1-1.4-2.6-.9-4 .5-1.3 1.5-2.1 2.1-2.9.4-.6.5-1.1.6-1.7.2-1.1.9-1.8 1.8-1.8z"/></svg><span>From behind</span></button><button type="button" class="shot" data-shot="closed" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><path d="M7 18.5H41"/><path d="M7 22.5H41"/></svg><span>Closed</span></button><button type="button" class="shot" data-shot="tent" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><path d="M10 26 24 6 38 26"/></svg><span>Tent</span></button><button type="button" class="shot" data-shot="tablet" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><rect x="8" y="9" width="32" height="16" rx="2.5"/><path d="M8 27.5H40"/></svg><span>Tablet</span></button><button type="button" class="shot" data-shot="trackpad" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><rect x="6" y="6" width="36" height="21" rx="3"/><rect class="glow" x="16" y="13" width="16" height="10" rx="2"/></svg><span>Lit trackpad</span></button><button type="button" class="shot" data-shot="ports" aria-pressed="false"><svg viewBox="0 0 48 32" aria-hidden="true"><rect x="5" y="12" width="38" height="8" rx="4"/><rect class="fill" x="11" y="14.6" width="5" height="2.8" rx="1.4"/><rect class="fill" x="19" y="14.6" width="5" height="2.8" rx="1.4"/><rect class="fill" x="27" y="14.9" width="8" height="2.2" rx=".8"/></svg><span>Ports</span></button></div>
+    </nav>
     <section class="controls" aria-label="Model controls">
       <div class="control-panel"><div class="range-row"><label for="hingeRange">Hinge angle</label><input id="hingeRange" type="range" min="0" max="360" value="106" aria-valuemin="0" aria-valuemax="360"><output id="angleValue" for="hingeRange">106°</output></div></div>
       <div class="poses" aria-label="Quick poses"><button type="button" data-pose="closed">Closed</button><button type="button" data-pose="laptop" aria-pressed="true">Laptop</button><button type="button" data-pose="flat">Flat</button><button type="button" data-pose="tent">Tent</button><button type="button" id="resetView">Reset view</button></div>
@@ -920,10 +949,10 @@
       updateMetalFinish();
     }
     function stopMotion() { cancelAnimationFrame(motionFrame); motionTarget = null; layoutOverride = null; }
-    function animateTo(target, view) {
+    function animateTo(target, view, onDone) {
       cancelAnimationFrame(motionFrame);
       layoutOverride = null;
-      if (reducedMotion) { motionTarget = null; angle = target; if (view) { orbitX = view.x; orbitY = view.y; } render(); return; }
+      if (reducedMotion) { motionTarget = null; angle = target; if (view) { orbitX = view.x; orbitY = view.y; } render(); if (onDone) onDone(); return; }
       const start = angle, startX = orbitX, startY = orbitY, endX = view ? view.x : orbitX, endY = view ? view.y : orbitY;
       // Sample the framing along the move (synchronously, never painted) and glide through the samples,
       // so the model stays in view while the lid swings without chasing its outline frame by frame.
@@ -967,6 +996,7 @@
         if (p >= 1) { angle = target; motionTarget = null; }
         render();
         if (p < 1) motionFrame = requestAnimationFrame(tick);
+        else if (onDone) onDone();
       }
       motionFrame = requestAnimationFrame(tick);
     }
@@ -1103,6 +1133,44 @@
       backlightToggle.setAttribute('aria-checked', String(on));
       backlightToggle.querySelector('.switch-state').textContent = on ? 'On' : 'Off';
     });
+    // Featured views: animate to a pose and camera, then (optionally) zoom onto a detail.
+    const shotButtons = document.querySelectorAll('[data-shot]');
+    const shotPresets = {
+      hero:     { angle: 106, view: { x: 0, y: -22 } },
+      behind:   { angle: 106, view: { x: -6, y: 158 } },
+      closed:   { angle: 0,   view: { x: 8, y: -24 } },
+      tent:     { angle: 300, view: { x: 0, y: -30 } },
+      tablet:   { angle: 360, view: { x: -26, y: -24 } },
+      trackpad: { angle: 106, view: { x: -32, y: -14 }, zoom: 2.3, focus: '.haptic-zone', light: true },
+      ports:    { angle: 106, view: { x: -6, y: -96 }, zoom: 2.2, focus: '.body-edge--left' }
+    };
+    let activeShot = null;
+    function markShot(name) {
+      activeShot = name;
+      shotButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.shot === name)));
+    }
+    function goToShot(name) {
+      const shot = shotPresets[name];
+      markShot(name);
+      if (shot.light && trackpadLightToggle.getAttribute('aria-checked') !== 'true') trackpadLightToggle.click();
+      if (zoom > minZoom + .001) animateZoom({ zoom: 1, panX: 0, panY: 0 });
+      animateTo(shot.angle, shot.view, () => {
+        if (activeShot !== name || !shot.zoom) return;
+        // Center the detail: at zoom z a point d from the viewer center lands at z * d + pan.
+        const frame = viewer.getBoundingClientRect(), box = document.querySelector(shot.focus).getBoundingClientRect();
+        const dx = (box.left + box.width / 2 - (frame.left + frame.width / 2) - panX) / zoom;
+        const dy = (box.top + box.height / 2 - (frame.top + frame.height / 2) - panY) / zoom;
+        const [x, y] = clampPan(shot.zoom, -shot.zoom * dx, -shot.zoom * dy);
+        animateZoom({ zoom: shot.zoom, panX: x, panY: y });
+      });
+    }
+    shotButtons.forEach(button => button.addEventListener('click', () => goToShot(button.dataset.shot)));
+    // Any manual change leaves the preset.
+    const clearShot = () => { if (activeShot) markShot(null); };
+    viewer.addEventListener('pointerdown', clearShot);
+    viewer.addEventListener('wheel', clearShot, { passive: true });
+    slider.addEventListener('input', clearShot);
+    document.querySelectorAll('[data-pose], #resetView, .zoom-controls button').forEach(button => button.addEventListener('click', clearShot));
     viewer.addEventListener('keydown', event => {
       if (event.target !== viewer || event.metaKey || event.ctrlKey || event.altKey) return;
       const orbitStep = event.shiftKey ? 15 : 5;
